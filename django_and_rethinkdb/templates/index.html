@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.14/angular-ui-router.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+  </head>
+  {% if user.is_authenticated %}
+  <body ng-app="rethinkDBWorkshop">
+    <div class='container'>
+      <div class='row'>
+        <div class='col-sm-9'>
+          <div ui-view id='container' class='messages'></div>
+        </div>
+        <div class='col-sm-3'>
+        </div>
+      </div>
+    </div>
+    <script src="/config.js"></script>
+    <script src='/static/app/services.js'></script>
+    <script src='/static/app/main/main.js'></script>
+    <script src='/static/app/index.js'></script>
+  </body>
+  {% endif %}
+  {% if not user.is_authenticated %}
+  <body>
+    <div class='container'>
+      <div class='row'>
+        <div class='col-sm-4 col-sm-offset-4'>
+          <h2>Login</h2>
+          <form action="/auth/login/" method="post">
+            {% csrf_token %}
+            <!--enctype="application/x-www-form-urlencoded">-->
+            <div class="form-group">
+              <label for='username'>Email</label>
+              <input type='email' name='username' class='form-control' placeholder='Email'/>
+            </div>
+            <div class="form-group">
+              <label for='password'>Password</label>
+              <input type='password' name='password' class='form-control' placeholder='Password'/>
+            </div>
+            <div class="form-group">
+              <input type='submit' class='form-control btn btn-primary'/>
+            </div>
+          </form>
+          <h2>Signup</h2>
+          <form action="/auth/signup/" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for='username'>Email</label>
+              <input type='email' name='username' class='form-control' placeholder='Email'/>
+            </div>
+            <div class="form-group">
+              <label for='email'>Password</label>
+              <input type='password' name='password' class='form-control' placeholder='Password'/>
+            </div>
+            <div class="form-group">
+              <input type='submit' class='form-control btn btn-primary'/>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  {% endif %}
+</html>
